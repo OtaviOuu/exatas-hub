@@ -21,6 +21,7 @@ defmodule ExatasHubWeb.Router do
     pipe_through :browser
 
     live "/courses", CourseLive.Index, :index
+    live "/courses/:slug", CourseLive.Show, :show
 
     get "/", PageRedirectController, :to_courses
   end

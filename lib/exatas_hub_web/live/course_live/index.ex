@@ -5,7 +5,10 @@ defmodule ExatasHubWeb.CourseLive.Index do
 
   def mount(_params, _session, socket) do
     courses = Courses.get_all_courses()
-    socket = assign(socket, :courses, courses)
+
+    socket =
+      socket
+      |> stream(:courses, courses, limit: 3)
 
     {:ok, socket}
   end
@@ -14,8 +17,12 @@ defmodule ExatasHubWeb.CourseLive.Index do
     ~H"""
     <Layouts.app flash={@flash}>
       <h1>Courses</h1>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6">
-        <.course_card :for={course <- @courses} course={course} />
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6"
+        id="courses-grid"
+        phx-update="stream"
+      >
+        <.course_card :for={{dom_id, course} <- @streams.courses} course={course} id={dom_id} />
       </div>
     </Layouts.app>
     """
@@ -23,12 +30,17 @@ defmodule ExatasHubWeb.CourseLive.Index do
 
   def course_card(assigns) do
     ~H"""
-    <div class="card card-lg bg-base-100 w-96 shadow-sm rounded-md transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-md ">
+    <div
+      class="card card-lg bg-base-100 w-96 shadow-sm rounded-md transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-md"
+      id={@id}
+    >
       <figure>
-        <img
-          src={@course.image}
-          alt={@course.title}
-        />
+        <.link navigate={~p"/courses/#{@course.slug}"}>
+          <img
+            src={@course.image}
+            alt={@course.title}
+          />
+        </.link>
       </figure>
       <div class="card-body">
         <div class="flex items-center gap-2 mb-2">
@@ -44,9 +56,6 @@ defmodule ExatasHubWeb.CourseLive.Index do
         <span>
           A card component has a figure, a body part, and inside body there are title and actions parts
         </span>
-        <div class="card-actions justify-end">
-          <button class="btn btn-primary">Buy Now</button>
-        </div>
       </div>
     </div>
     """
