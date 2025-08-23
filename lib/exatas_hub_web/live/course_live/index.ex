@@ -46,7 +46,7 @@ defmodule ExatasHubWeb.CourseLive.Index do
         <div class="flex items-center gap-2 mb-2">
           <span class="inline-block text-primary">
             <img
-              src={@course.university_logo}
+              src={@course.university.logo}
               alt="Universidade"
               class="w-6 h-6 rounded-sm bg-base-200"
             />

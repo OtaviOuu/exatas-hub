@@ -24,7 +24,7 @@ defmodule ExatasHubWeb.CourseLive.Show do
             <h1 class="text-3xl md:text-4xl font-bold text-base-content mb-4">{@course.title}</h1>
             <div class="flex items-center gap-3 mb-6">
               <img
-                src={@course.university_logo}
+                src={@course.university.logo}
                 alt="Universidade"
                 class="w-10 h-10 rounded bg-base-100 border-2 border-base-200 shadow"
               />

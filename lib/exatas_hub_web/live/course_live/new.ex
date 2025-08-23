@@ -1,4 +1,5 @@
 defmodule ExatasHubWeb.CourseLive.New do
+  alias ExatasHub.Universities
   use ExatasHubWeb, :live_view
 
   alias ExatasHub.Courses
@@ -7,8 +8,8 @@ defmodule ExatasHubWeb.CourseLive.New do
 
   def mount(_params, _session, socket) do
     course_change = Courses.get_course_changeset(%Course{}, %{})
-
-    {:ok, assign(socket, form: to_form(course_change, as: :course))}
+    universities = Universities.get_all_universities()
+    {:ok, assign(socket, form: to_form(course_change, as: :course), universities: universities)}
   end
 
   def render(assigns) do
@@ -18,10 +19,11 @@ defmodule ExatasHubWeb.CourseLive.New do
         <.input field={@form[:title]} type="text" label="Title" phx-debounce="blur" />
         <.input field={@form[:image]} type="text" label="Image" phx-debounce="blur" />
         <.input
-          field={@form[:university_logo]}
-          type="text"
-          label="University Logo Url"
+          field={@form[:university_id]}
+          type="select"
+          label="University"
           phx-debounce="blur"
+          options={for university <- @universities, do: {university.name, university.id}}
         />
         <.button phx-disable-with="Saving...">Save</.button>
       </.form>
