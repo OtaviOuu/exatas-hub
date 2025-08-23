@@ -95,10 +95,10 @@ defmodule ExatasHubWeb.CourseLive.Show do
                 </button>
               </div>
             </div>
+            <.live_component module={ChatLive} id="chat" />
           </div>
         </div>
       </section>
-      <.live_component module={ChatLive} id="chat" />
     </Layouts.app>
     """
   end
