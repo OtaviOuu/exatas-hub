@@ -17,13 +17,13 @@ defmodule ExatasHubWeb.CourseLive.Index do
     ~H"""
     <Layouts.app flash={@flash}>
       <h1>Courses</h1>
-      <div
+      <section
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6"
         id="courses-grid"
         phx-update="stream"
       >
         <.course_card :for={{dom_id, course} <- @streams.courses} course={course} id={dom_id} />
-      </div>
+      </section>
     </Layouts.app>
     """
   end
