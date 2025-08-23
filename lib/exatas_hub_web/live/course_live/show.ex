@@ -16,7 +16,7 @@ defmodule ExatasHubWeb.CourseLive.Show do
 
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash}>
+    <Layouts.app flash={@flash} current_scope={@current_scope}>
       <section class="max-w-6xl mx-auto mt-10 px-2 md:px-0">
         <div class="flex flex-col md:flex-row gap-8">
           <!-- Esquerda: Detalhes do curso -->

@@ -11,7 +11,7 @@ defmodule ExatasHubWeb.UniversityLive.New do
 
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash}>
+    <Layouts.app flash={@flash} current_scope={@current_scope}>
       <.form for={@form} phx-submit="save" phx-change="validate">
         <.input field={@form[:name]} type="text" label="Name" phx-debounce="blur" />
         <.input field={@form[:logo]} type="text" label="Logo" phx-debounce="blur" />

@@ -40,19 +40,34 @@ defmodule ExatasHubWeb.Layouts do
       <div class="flex-1">
         <a href="/" class="flex-1 flex w-fit items-center gap-2">
           <img src={~p"/images/logo.svg"} width="36" />
-          <span class="text-sm font-semibold">v{Application.spec(:phoenix, :vsn)}</span>
+          <span class="text-sm font-semibold">ExatasHub</span>
         </a>
       </div>
       <div class="flex-none">
         <ul class="flex flex-column px-1 space-x-4 items-center">
+          <%= if @current_scope do %>
+            <li>
+              {@current_scope.user.email}
+            </li>
+            <li>
+              <.link navigate={~p"/users/settings"} class="btn btn-ghost">Settings</.link>
+            </li>
+            <li>
+              <.link href={~p"/users/log-out"} method="delete" class="btn btn-ghost">Log out</.link>
+            </li>
+          <% else %>
+            <li>
+              <.link navigate={~p"/users/register"} class="btn btn-ghost">Register</.link>
+            </li>
+            <li>
+              <.link navigate={~p"/users/log-in"} class="btn btn-ghost">Log in</.link>
+            </li>
+          <% end %>
           <li>
             <.link navigate={~p"/courses"} class="btn btn-ghost">Courses</.link>
           </li>
           <li>
             <.link navigate={~p"/universities"} class="btn btn-ghost">Universities</.link>
-          </li>
-          <li>
-            <.theme_toggle />
           </li>
         </ul>
       </div>

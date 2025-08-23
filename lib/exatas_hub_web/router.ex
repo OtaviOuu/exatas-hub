@@ -28,10 +28,12 @@ defmodule ExatasHubWeb.Router do
       live "/universities/new", UniversityLive.New, :new
     end
 
-    live "/courses", CourseLive.Index, :index
-    live "/courses/:slug", CourseLive.Show, :show
+    live_session :default, on_mount: [{ExatasHubWeb.UserAuth, :mount_current_scope}] do
+      live "/courses", CourseLive.Index, :index
+      live "/courses/:slug", CourseLive.Show, :show
 
-    live "/universities", UniversityLive.Index, :index
+      live "/universities", UniversityLive.Index, :index
+    end
   end
 
   # Other scopes may use custom stacks.
