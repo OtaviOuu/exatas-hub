@@ -84,8 +84,47 @@ defmodule ExatasHubWeb.CourseLive.Show do
                 Carga horária: 40h
               </li>
             </ul>
+
+            <div class="mb-10">
+              <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <.icon name="hero-play-circle" class="w-6 h-6 text-primary" /> Playlist do Curso
+              </h2>
+
+              <div class="grid grid-cols-1 gap-4">
+                <div
+                  :for={_1 <- 1..30}
+                  class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md hover:border-primary/50 transition-all"
+                >
+                  <div class="card-body p-4">
+                    <div class="flex gap-3">
+                      <div class="relative w-32 h-20 flex-shrink-0 bg-base-300 rounded-lg overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center bg-black/10">
+                          <.icon name="hero-play" class="w-8 h-8 text-white/80 drop-shadow-md" />
+                        </div>
+                        <div class="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded">
+                          18:45
+                        </div>
+                      </div>
+                      <div class="flex-1">
+                        <h3 class="font-semibold text-base-content">2. Fundamentos Teóricos</h3>
+                        <p class="text-sm text-base-content/70">Conceitos básicos e terminologia</p>
+                        <div class="flex items-center mt-2 text-xs text-base-content/60">
+                          <.icon name="hero-clock" class="w-4 h-4 mr-1" /> Pendente
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4">
+                <button class="btn btn-outline btn-sm">
+                  <.icon name="hero-arrow-down" class="w-4 h-4 mr-1" /> Carregar mais vídeos
+                </button>
+              </div>
+            </div>
           </div>
-          <!-- Direita: Card de inscrição -->
+          
+    <!-- Direita: Card de inscrição -->
           <div class="w-full md:w-96 flex-shrink-0">
             <div class="bg-base-100 rounded-xl shadow-lg border border-base-200 overflow-hidden">
               <img src={@course.image} alt={@course.title} class="w-full h-48 object-cover border-b" />
