@@ -1,7 +1,6 @@
 defmodule ExatasHub.Courses.Course do
   use Ecto.Schema
   import Ecto.Changeset
-  alias ExatasHub.Courses.Course
   @create_fields [:title, :image, :university_logo, :slug]
 
   schema "courses" do
@@ -14,17 +13,29 @@ defmodule ExatasHub.Courses.Course do
 
   @doc false
 
-  def changeset(attrs) do
-    %__MODULE__{}
+  def changeset(course \\ %__MODULE__{}, attrs) do
+    course
     |> cast(attrs, @create_fields)
-    |> put_change(:slug, generate_slug(attrs.title))
+    |> generate_slug()
     |> validate_required(@create_fields)
+    |> validate_length(:title, min: 3, max: 100)
     |> check_constraint(:slug, name: :slug_not_nil, message: "Slug cannot be null")
   end
 
-  defp generate_slug(title) when not is_nil(title) do
-    title
-    |> String.downcase()
-    |> String.replace(~r/[^\w]+/, "-")
+  defp generate_slug(changeset) do
+    title = get_field(changeset, :title)
+
+    case title do
+      nil ->
+        changeset
+
+      _ ->
+        slug =
+          title
+          |> String.downcase()
+          |> String.replace(~r/[^\w]+/, "-")
+
+        put_change(changeset, :slug, slug)
+    end
   end
 end
