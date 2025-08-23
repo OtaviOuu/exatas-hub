@@ -1,8 +1,8 @@
 defmodule ExatasHub.Universities do
   alias ExatasHub.Universities.GetAllUniversities
   alias ExatasHub.Universities.GetUniversityChangeset
-  alias ExatasHub.Universities.GetUniversityChangeset
   alias ExatasHub.Universities.CreateUniversity
+
   alias ExatasHub.Universities.University
 
   defdelegate get_all_universities(), to: GetAllUniversities, as: :call
