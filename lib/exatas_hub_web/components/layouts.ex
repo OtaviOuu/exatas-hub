@@ -3,6 +3,7 @@ defmodule ExatasHubWeb.Layouts do
   This module holds layouts and related functionality
   used by your application.
   """
+  alias ExatasHub.Universities
   use ExatasHubWeb, :html
 
   # Embed all files in layouts/* within this module.
@@ -45,18 +46,13 @@ defmodule ExatasHubWeb.Layouts do
       <div class="flex-none">
         <ul class="flex flex-column px-1 space-x-4 items-center">
           <li>
-            <a href="https://phoenixframework.org/" class="btn btn-ghost">Website</a>
+            <.link navigate={~p"/courses"} class="btn btn-ghost">Courses</.link>
           </li>
           <li>
-            <a href="https://github.com/phoenixframework/phoenix" class="btn btn-ghost">GitHub</a>
+            <.link navigate={~p"/universities"} class="btn btn-ghost">Universities</.link>
           </li>
           <li>
             <.theme_toggle />
-          </li>
-          <li>
-            <a href="https://hexdocs.pm/phoenix/overview.html" class="btn btn-primary">
-              Get Started <span aria-hidden="true">&rarr;</span>
-            </a>
           </li>
         </ul>
       </div>
