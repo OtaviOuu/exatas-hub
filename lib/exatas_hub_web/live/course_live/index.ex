@@ -8,7 +8,7 @@ defmodule ExatasHubWeb.CourseLive.Index do
 
     socket =
       socket
-      |> stream(:courses, courses, limit: 3)
+      |> stream(:courses, courses, limit: 30)
 
     {:ok, socket}
   end

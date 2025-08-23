@@ -2,6 +2,7 @@ defmodule ExatasHubWeb.CourseLive.Show do
   use ExatasHubWeb, :live_view
 
   alias ExatasHub.Courses
+  alias ExatasHubWeb.CourseLive.Components.ChatLive
 
   def mount(params, _session, socket) do
     course = Courses.get_course_by_slug(params["slug"])
@@ -97,6 +98,7 @@ defmodule ExatasHubWeb.CourseLive.Show do
           </div>
         </div>
       </section>
+      <.live_component module={ChatLive} id="chat" />
     </Layouts.app>
     """
   end

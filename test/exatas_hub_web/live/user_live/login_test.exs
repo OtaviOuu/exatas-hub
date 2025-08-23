@@ -50,9 +50,7 @@ defmodule ExatasHubWeb.UserLive.LoginTest do
       {:ok, lv, _html} = live(conn, ~p"/users/log-in")
 
       form =
-        form(lv, "#login_form_password",
-          user: %{email: user.email, password: valid_user_password(), remember_me: true}
-        )
+        form(lv, "#login_form_password", user: %{email: user.email, password: valid_user_password(), remember_me: true})
 
       conn = submit_form(form, conn)
 
