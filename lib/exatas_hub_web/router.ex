@@ -20,7 +20,9 @@ defmodule ExatasHubWeb.Router do
   scope "/", ExatasHubWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/courses", CourseLive.Index, :index
+
+    get "/", PageRedirectController, :to_courses
   end
 
   # Other scopes may use custom stacks.
