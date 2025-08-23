@@ -20,10 +20,14 @@ defmodule ExatasHubWeb.Router do
   scope "/", ExatasHubWeb do
     pipe_through :browser
 
+    live_session :admin,
+      on_mount: [{ExatasHubWeb.UserAuth, :require_admin}] do
+      live "/courses/new", CourseLive.New, :new
+      live "/courses/:slug/edit", CourseLive.Edit, :edit
+    end
+
     live "/courses", CourseLive.Index, :index
     live "/courses/:slug", CourseLive.Show, :show
-
-    get "/", PageRedirectController, :to_courses
   end
 
   # Other scopes may use custom stacks.
