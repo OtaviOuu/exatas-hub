@@ -9,3 +9,17 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias ExatasHub.Repo
+alias ExatasHub.Courses.Course
+
+c = %Course{
+  title: "Introduction to Elixir",
+  image:
+    "https://downloadlynet.ir/wp-content/uploads/2024/12/Complete-web-development-course-C.jpg",
+  university_logo: "https://images.seeklogo.com/logo-png/14/1/usp-logo-png_seeklogo-146733.png"
+}
+
+for course <- 1..20 do
+  Repo.insert!(c)
+end
