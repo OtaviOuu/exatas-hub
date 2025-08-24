@@ -92,13 +92,18 @@ defmodule ExatasHubWeb.Layouts do
         aria-label="Sidenav"
       >
         <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+          <h2 class="text-2xl font-bold mb-4 text-center text-primary">
+            <span class="daisy-title">Teu curso ai </span>
+          </h2>
           <ul class="space-y-2">
             <li :for={_i <- 1..30}>
               <.link
                 href="#"
                 class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <span class="ml-3">1. Introduçaõ a analise</span>
+                <span class="ml-3">
+                  <.icon name="hero-video-camera" class="w-5 h-5 text-gray-600 mr-3" />1. Introdução a análise
+                </span>
               </.link>
             </li>
           </ul>
