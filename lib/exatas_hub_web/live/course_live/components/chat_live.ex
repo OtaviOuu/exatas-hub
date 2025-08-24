@@ -34,7 +34,12 @@ defmodule ExatasHubWeb.CourseLive.Components.ChatLive do
           <span class="badge badge-primary badge-sm">Online</span>
         </div>
         <div class="flex-1 overflow-y-auto max-h-96 pr-2" phx-update="stream" id="messages-container">
-          <.message :for={{dom_id, message} <- @course_messages} message={message} id={dom_id} />
+          <.message
+            :for={{dom_id, message} <- @course_messages}
+            message={message}
+            user_id={@current_scope.user.id}
+            id={dom_id}
+          />
         </div>
         <.form for={@form} phx-submit="send_message" phx-target={@myself} phx-change="validate">
           <.input field={@form[:text]} type="textarea" placeholder="Escreva uma mensagem..." phx-debounce="500" />
@@ -77,14 +82,30 @@ defmodule ExatasHubWeb.CourseLive.Components.ChatLive do
 
   def message(assigns) do
     ~H"""
-    <div class="chat chat-start mb-3" id={@id}>
-      <div class="chat-header text-xs flex items-center mb-1">
-        <span class="font-medium text-info">{@message.user.email}</span>
-        <span class="text-xs opacity-60 ml-2">
-          • {@message.inserted_at |> Calendar.strftime("%d/%m/%Y %H:%M")}
-        </span>
+    <div class="phx-no-feedback" id={@id}>
+      <div :if={@message.user_id == @user_id} class="chat chat-end mb-3">
+        <div class="chat-header text-xs flex items-center justify-end mb-1">
+          <span class="text-xs opacity-60 mr-2">
+            {@message.inserted_at |> Calendar.strftime("%d/%m/%Y %H:%M")} •
+          </span>
+          <span class="font-medium text-primary">{@message.user.email}</span>
+        </div>
+        <div class="chat-bubble chat-bubble-primary bg-primary text-white shadow-md">
+          {@message.text}
+        </div>
       </div>
-      <div class="chat-bubble chat-bubble-info">{@message.text}</div>
+
+      <div :if={@message.user_id != @user_id} class="chat chat-start mb-3">
+        <div class="chat-header text-xs flex items-center mb-1">
+          <span class="font-medium text-info">{@message.user.email}</span>
+          <span class="text-xs opacity-60 ml-2">
+            • {@message.inserted_at |> Calendar.strftime("%d/%m/%Y %H:%M")}
+          </span>
+        </div>
+        <div class="chat-bubble chat-bubble-info bg-gray-200 text-gray-900 shadow">
+          {@message.text}
+        </div>
+      </div>
     </div>
     """
   end
