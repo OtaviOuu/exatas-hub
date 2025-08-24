@@ -5,17 +5,20 @@ defmodule ExatasHubWeb.CourseLive.Components.ChatLive do
   alias ExatasHub.Messages.Message
 
   def update(assigns, socket) do
+    course = assigns.course
+    if connected?(socket), do: Messages.subscribe("course:#{course.id}")
+
     current_scope = assigns.current_scope
 
     message_change = Messages.get_message_changeset(%Message{user_id: current_scope.user.id}, %{}, current_scope)
-    course_messages = Messages.get_all_messages()
 
     socket =
       socket
       |> assign(form: to_form(message_change))
       |> assign(component_id: assigns.id)
-      |> assign(course_messages: course_messages)
+      |> assign(course_messages: assigns.messages)
       |> assign(current_scope: current_scope)
+      |> assign(course: course)
 
     {:ok, socket}
   end
@@ -46,13 +49,21 @@ defmodule ExatasHubWeb.CourseLive.Components.ChatLive do
     scope = socket.assigns.current_scope
 
     message_change =
-      Messages.get_message_changeset(%Message{user_id: scope.user.id}, message_params, scope)
+      Messages.get_message_changeset(
+        %Message{user_id: scope.user.id},
+        message_params,
+        scope
+      )
 
     {:noreply, assign(socket, form: to_form(message_change, action: :validate))}
   end
 
   def handle_event("send_message", %{"message" => message_params}, socket) do
     scope = socket.assigns.current_scope
+
+    message_params =
+      message_params
+      |> Map.put("course_id", socket.assigns.course.id)
 
     case Messages.create_message(scope, message_params) do
       {:ok, _message} ->

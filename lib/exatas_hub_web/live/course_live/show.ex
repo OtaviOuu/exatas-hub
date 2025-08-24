@@ -3,13 +3,16 @@ defmodule ExatasHubWeb.CourseLive.Show do
 
   alias ExatasHub.Courses
   alias ExatasHubWeb.CourseLive.Components.ChatLive
+  alias ExatasHub.Messages
 
   def mount(params, _session, socket) do
     course = Courses.get_course_by_slug(params["slug"])
+    course_messages = Messages.get_all_messages(course.id)
 
     socket =
       socket
       |> assign(course: course)
+      |> assign(course_messages: course_messages)
 
     {:ok, socket}
   end
@@ -131,12 +134,24 @@ defmodule ExatasHubWeb.CourseLive.Show do
               </div>
             </div>
             <div class="my-8">
-              <.live_component module={ChatLive} id="chat" current_scope={@current_scope} />
+              <.live_component
+                module={ChatLive}
+                id="chat"
+                current_scope={@current_scope}
+                course={@course}
+                messages={@course_messages}
+              />
             </div>
           </div>
         </div>
       </section>
     </Layouts.app>
     """
+  end
+
+  def handle_info({:new_message, message}, socket) do
+    new_messages = socket.assigns.course_messages ++ [message]
+
+    {:noreply, update(socket, :course_messages, fn _ -> new_messages end)}
   end
 end
