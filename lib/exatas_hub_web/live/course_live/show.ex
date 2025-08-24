@@ -133,7 +133,8 @@ defmodule ExatasHubWeb.CourseLive.Show do
                 </button>
               </div>
             </div>
-            <div class="my-8">
+
+            <div :if={@current_scope} class="my-8">
               <.live_component
                 module={ChatLive}
                 id="chat"
@@ -141,6 +142,18 @@ defmodule ExatasHubWeb.CourseLive.Show do
                 course={@course}
                 messages={@streams.course_messages}
               />
+            </div>
+
+            <div :if={!@current_scope} class="my-8">
+              <div class="bg-base-200 p-4 rounded-lg text-center text-base-content/70">
+                <p class="mb-4">Entre para participar do chat!</p>
+                <.link
+                  navigate={~p"/users/log-in"}
+                  class="inline-block px-4 py-2 bg-primary hover:bg-primary-focus text-primary-content rounded-lg font-semibold transition"
+                >
+                  Entrar
+                </.link>
+              </div>
             </div>
           </div>
         </div>
