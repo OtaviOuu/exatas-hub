@@ -90,10 +90,11 @@ defmodule ExatasHubWeb.CourseLive.Show do
                 <.icon name="hero-play-circle" class="w-6 h-6 text-primary" /> Playlist do Curso
               </h2>
 
-              <div class="grid grid-cols-1 gap-4">
-                <div
-                  :for={_1 <- 1..30}
-                  class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md hover:border-primary/50 transition-all"
+              <div class="grid grid-cols-1 gap-4 h-96 overflow-y-auto p-2 space-y-2">
+                <.link
+                  :for={_1 <- 1..10}
+                  navigate={~p"/courses/#{@course.slug}/playlist/"}
+                  class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md hover:border-primary/50 transition-all "
                 >
                   <div class="card-body p-4">
                     <div class="flex gap-3">
@@ -114,12 +115,7 @@ defmodule ExatasHubWeb.CourseLive.Show do
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div class="mt-4">
-                <button class="btn btn-outline btn-sm">
-                  <.icon name="hero-arrow-down" class="w-4 h-4 mr-1" /> Carregar mais vídeos
-                </button>
+                </.link>
               </div>
             </div>
           </div>

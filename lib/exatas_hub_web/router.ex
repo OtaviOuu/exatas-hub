@@ -31,6 +31,7 @@ defmodule ExatasHubWeb.Router do
     live_session :default, on_mount: [{ExatasHubWeb.UserAuth, :mount_current_scope}] do
       live "/courses", CourseLive.Index, :index
       live "/courses/:slug", CourseLive.Show, :show
+      live "/courses/:slug/playlist/", CourseLive.Playlist, :playlist
 
       live "/universities", UniversityLive.Index, :index
     end
