@@ -3,7 +3,6 @@ defmodule ExatasHubWeb.Layouts do
   This module holds layouts and related functionality
   used by your application.
   """
-  alias ExatasHub.Universities
   use ExatasHubWeb, :html
 
   # Embed all files in layouts/* within this module.

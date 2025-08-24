@@ -131,7 +131,7 @@ defmodule ExatasHubWeb.CourseLive.Show do
               </div>
             </div>
             <div class="my-8">
-              <.live_component module={ChatLive} id="chat" />
+              <.live_component module={ChatLive} id="chat" current_scope={@current_scope} />
             </div>
           </div>
         </div>
