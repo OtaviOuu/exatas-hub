@@ -33,8 +33,8 @@ defmodule ExatasHubWeb.CourseLive.Components.ChatLive do
           </h2>
           <span class="badge badge-primary badge-sm">Online</span>
         </div>
-        <div class="flex-1 overflow-y-auto max-h-96 pr-2">
-          <.message :for={message <- @course_messages} message={message} />
+        <div class="flex-1 overflow-y-auto max-h-96 pr-2" phx-update="stream" id="messages-container">
+          <.message :for={{dom_id, message} <- @course_messages} message={message} id={dom_id} />
         </div>
         <.form for={@form} phx-submit="send_message" phx-target={@myself} phx-change="validate">
           <.input field={@form[:text]} type="textarea" placeholder="Escreva uma mensagem..." phx-debounce="500" />
@@ -77,7 +77,7 @@ defmodule ExatasHubWeb.CourseLive.Components.ChatLive do
 
   def message(assigns) do
     ~H"""
-    <div class="chat chat-start mb-3">
+    <div class="chat chat-start mb-3" id={@id}>
       <div class="chat-header text-xs flex items-center mb-1">
         <span class="font-medium text-info">{@message.user.email}</span>
         <span class="text-xs opacity-60 ml-2">

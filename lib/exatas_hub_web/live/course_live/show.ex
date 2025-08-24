@@ -12,7 +12,7 @@ defmodule ExatasHubWeb.CourseLive.Show do
     socket =
       socket
       |> assign(course: course)
-      |> assign(course_messages: course_messages)
+      |> stream(:course_messages, course_messages, at: -1)
 
     {:ok, socket}
   end
@@ -139,7 +139,7 @@ defmodule ExatasHubWeb.CourseLive.Show do
                 id="chat"
                 current_scope={@current_scope}
                 course={@course}
-                messages={@course_messages}
+                messages={@streams.course_messages}
               />
             </div>
           </div>
@@ -150,8 +150,6 @@ defmodule ExatasHubWeb.CourseLive.Show do
   end
 
   def handle_info({:new_message, message}, socket) do
-    new_messages = socket.assigns.course_messages ++ [message]
-
-    {:noreply, update(socket, :course_messages, fn _ -> new_messages end)}
+    {:noreply, stream_insert(socket, :course_messages, message, at: -1)}
   end
 end
