@@ -95,16 +95,29 @@ defmodule ExatasHubWeb.Layouts do
             <span class="daisy-title">Teu curso ai </span>
           </h2>
           <ul class="space-y-2">
-            <li :for={_i <- 1..30}>
-              <.link
-                href="#"
-                class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <span class="ml-3">
-                  <.icon name="hero-video-camera" class="w-5 h-5 text-gray-600 mr-3" />1. Introdução a análise
-                </span>
-              </.link>
-            </li>
+            <.async_result :let={videos} assign={@videos}>
+              <:loading>
+                <div class="flex justify-center items-center h-32">
+                  <span class="loading loading-spinner text-success"></span>
+                </div>
+              </:loading>
+              <:failed :let={_failure}>there was an error loading the videos</:failed>
+              <%= if videos do %>
+                <li :for={video <- videos}>
+                  <div
+                    phx-click="select_video"
+                    phx-value-video-id={video.video_id}
+                    class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  >
+                    <span class="ml-3">
+                      <.icon name="hero-video-camera" class="w-5 h-5 text-gray-600 mr-3" />{video.title}
+                    </span>
+                  </div>
+                </li>
+              <% else %>
+                Playlist sem vídeos
+              <% end %>
+            </.async_result>
           </ul>
         </div>
       </aside>

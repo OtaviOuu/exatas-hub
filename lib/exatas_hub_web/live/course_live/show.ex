@@ -4,6 +4,7 @@ defmodule ExatasHubWeb.CourseLive.Show do
   alias ExatasHub.Courses
   alias ExatasHubWeb.CourseLive.Components.ChatLive
   alias ExatasHub.Messages
+  alias ExatasHub.Youtube
 
   def mount(params, _session, socket) do
     course = Courses.get_course_by_slug(params["slug"])
@@ -13,6 +14,10 @@ defmodule ExatasHubWeb.CourseLive.Show do
       socket
       |> assign(course: course)
       |> stream(:course_messages, course_messages, at: -1)
+      |> assign_async(:videos, fn ->
+        videos = Youtube.get_all_videos_from_playlist()
+        {:ok, %{videos: videos}}
+      end)
 
     {:ok, socket}
   end
@@ -94,31 +99,7 @@ defmodule ExatasHubWeb.CourseLive.Show do
               </h2>
 
               <div class="grid grid-cols-1 gap-4 h-96 overflow-y-auto p-2 space-y-2">
-                <.link
-                  :for={_1 <- 1..10}
-                  navigate={~p"/courses/#{@course.slug}/playlist/"}
-                  class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md hover:border-primary/50 transition-all "
-                >
-                  <div class="card-body p-4">
-                    <div class="flex gap-3">
-                      <div class="relative w-32 h-20 flex-shrink-0 bg-base-300 rounded-lg overflow-hidden">
-                        <div class="absolute inset-0 flex items-center justify-center bg-black/10">
-                          <.icon name="hero-play" class="w-8 h-8 text-white/80 drop-shadow-md" />
-                        </div>
-                        <div class="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded">
-                          18:45
-                        </div>
-                      </div>
-                      <div class="flex-1">
-                        <h3 class="font-semibold text-base-content">2. Fundamentos Teóricos</h3>
-                        <p class="text-sm text-base-content/70">Conceitos básicos e terminologia</p>
-                        <div class="flex items-center mt-2 text-xs text-base-content/60">
-                          <.icon name="hero-clock" class="w-4 h-4 mr-1" /> Pendente
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </.link>
+                <.video_playlist_card course={@course} videos={@videos} />
               </div>
             </div>
           </div>
@@ -133,7 +114,6 @@ defmodule ExatasHubWeb.CourseLive.Show do
                 </button>
               </div>
             </div>
-
             <div :if={@current_scope} class="my-8">
               <.live_component
                 module={ChatLive}
@@ -159,6 +139,48 @@ defmodule ExatasHubWeb.CourseLive.Show do
         </div>
       </section>
     </Layouts.app>
+    """
+  end
+
+  def video_playlist_card(assigns) do
+    ~H"""
+    <.async_result :let={videos} assign={@videos}>
+      <:loading>
+        <div class="flex justify-center items-center h-32">
+          <span class="loading loading-spinner text-success"></span>
+        </div>
+      </:loading>
+      <:failed :let={_failure}>there was an error loading the videos</:failed>
+      <%= if videos do %>
+        <.link
+          :for={video <- videos}
+          navigate={~p"/courses/#{@course.slug}/playlist/PLBCF2DAC6FFB574DE?video=#{video.video_id}"}
+          class="card bg-base-100 border border-base-300 shadow-sm hover:shadow-md hover:border-primary/50 transition-all "
+        >
+          <div class="card-body p-4">
+            <div class="flex gap-3">
+              <div class="relative w-32 h-20 flex-shrink-0 bg-base-300 rounded-lg overflow-hidden">
+                <div class="absolute inset-0 flex items-center justify-center bg-black/10">
+                  <img src={video.thumbnail} alt={video.title} class="w-full h-full object-cover" />
+                </div>
+                <div class="absolute bottom-1 right-1 bg-black/70 text-white text-xs px-1 rounded">
+                  18:45
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3 class="font-semibold text-base-content">{video.title}</h3>
+                <p class="text-sm text-base-content/70">{video.description}</p>
+                <div class="flex items-center mt-2 text-xs text-base-content/60">
+                  <.icon name="hero-clock" class="w-4 h-4 mr-1" /> Pendente
+                </div>
+              </div>
+            </div>
+          </div>
+        </.link>
+      <% else %>
+        Playlist sem vídeos
+      <% end %>
+    </.async_result>
     """
   end
 
