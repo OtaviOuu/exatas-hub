@@ -91,9 +91,17 @@ defmodule ExatasHubWeb.Layouts do
         aria-label="Sidenav"
       >
         <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-          <h2 class="text-2xl font-bold mb-4 text-center text-primary">
-            <span class="daisy-title">Teu curso ai </span>
+          <h2 class="text-2xl font-bold mb-6 text-center text-primary">
+            <div class="flex justify-start items-center">
+              <a
+                href={"/courses/#{@slug}"}
+                class="flex items-center gap-2 w-fit text-gray-700 dark:text-gray-200 hover:text-primary transition-colors duration-300 transform hover:translate-x-1"
+              >
+                <.icon name="hero-arrow-left" class="w-5 h-5" /> Voltar
+              </a>
+            </div>
           </h2>
+
           <ul class="space-y-2">
             <.async_result :let={videos} assign={@videos}>
               <:loading>

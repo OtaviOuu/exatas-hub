@@ -30,7 +30,7 @@ defmodule ExatasHubWeb.CourseLive.Playlist do
       flash={@flash}
       videos={@videos}
       playlist_id={@playlist_id}
-      course={@playlist_slug}
+      slug={@playlist_slug}
     >
       <iframe
         class="w-full aspect-video"
