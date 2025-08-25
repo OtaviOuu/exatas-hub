@@ -1,12 +1,13 @@
 defmodule ExatasHub.Courses.Course do
   use Ecto.Schema
   import Ecto.Changeset
-  @create_fields [:title, :image, :slug, :university_id]
+  @create_fields [:title, :image, :slug, :university_id, :playlist_link]
 
   schema "courses" do
     field :title, :string
     field :image, :string
     field :slug, :string
+    field :playlist_link, :string
     belongs_to :university, ExatasHub.Universities.University
     timestamps()
   end

@@ -18,6 +18,7 @@ defmodule ExatasHubWeb.CourseLive.New do
       <.form for={@form} phx-submit="save" phx-change="validate">
         <.input field={@form[:title]} type="text" label="Title" phx-debounce="blur" />
         <.input field={@form[:image]} type="text" label="Image" phx-debounce="blur" />
+        <.input field={@form[:playlist_link]} type="text" label="Playlist Link" phx-debounce="blur" />
         <.input
           field={@form[:university_id]}
           type="select"
@@ -41,6 +42,7 @@ defmodule ExatasHubWeb.CourseLive.New do
 
   def handle_event("save", %{"course" => course_params}, socket) do
     user_scope = socket.assigns.current_scope
+    IO.inspect(course_params, label: "Course Params")
 
     case Courses.create_course(user_scope, course_params) do
       {:ok, _course} ->

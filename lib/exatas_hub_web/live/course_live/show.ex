@@ -7,15 +7,17 @@ defmodule ExatasHubWeb.CourseLive.Show do
   alias ExatasHub.Youtube
 
   def mount(params, _session, socket) do
+    IO.inspect(params, label: "Params")
     course = Courses.get_course_by_slug(params["slug"])
     course_messages = Messages.get_all_messages(course.id)
+    IO.inspect(course)
 
     socket =
       socket
       |> assign(course: course)
       |> stream(:course_messages, course_messages, at: -1)
       |> assign_async(:videos, fn ->
-        videos = Youtube.get_all_videos_from_playlist()
+        videos = Youtube.get_all_videos_from_playlist(course.playlist_link)
         {:ok, %{videos: videos}}
       end)
 
@@ -169,7 +171,9 @@ defmodule ExatasHubWeb.CourseLive.Show do
               </div>
               <div class="flex-1">
                 <h3 class="font-semibold text-base-content">{video.title}</h3>
-                <p class="text-sm text-base-content/70">{video.description}</p>
+                <p class="text-sm text-base-content/70">
+                  {String.slice(video.description, 0, 200) <> if String.length(video.description) > 200, do: "..."}
+                </p>
                 <div class="flex items-center mt-2 text-xs text-base-content/60">
                   <.icon name="hero-clock" class="w-4 h-4 mr-1" /> Pendente
                 </div>

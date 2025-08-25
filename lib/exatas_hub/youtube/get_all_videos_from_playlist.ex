@@ -1,9 +1,16 @@
 defmodule ExatasHub.Youtube.GetAllVideosFromPlaylist do
   @api_key System.fetch_env!("YOUTUBE_API_KEY")
-  def call() do
-    IO.inspect(@api_key, label: "API KEY")
+  def call(playlist_link) do
+    IO.inspect(playlist_link, label: "Playlist Link")
 
-    Req.get!(playlist_api("PLIEzh1OveCVczEZAjhVIVd7Qs-X8ILgnI")).body["items"]
+    playlist_id =
+      playlist_link
+      |> String.split("?list=")
+      |> List.last()
+
+    IO.inspect(playlist_id, label: "Playlist ID")
+
+    Req.get!(playlist_api(playlist_id)).body["items"]
     |> usefull_data()
   end
 
