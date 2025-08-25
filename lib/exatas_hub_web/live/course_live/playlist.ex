@@ -1,14 +1,17 @@
 defmodule ExatasHubWeb.CourseLive.Playlist do
   use ExatasHubWeb, :live_view
+  alias ExatasHub.Courses
   alias ExatasHub.Youtube
 
   def mount(%{"id" => playlist_id, "slug" => playlist_slug}, _session, socket) do
+    %{playlist_link: playlist_link} = Courses.get_course_by_slug(playlist_slug)
+
     socket =
       socket
       |> assign(:playlist_id, playlist_id)
       |> assign(:playlist_slug, playlist_slug)
       |> assign_async(:videos, fn ->
-        videos = Youtube.get_all_videos_from_playlist()
+        videos = Youtube.get_all_videos_from_playlist(playlist_link)
         {:ok, %{videos: videos}}
       end)
 
