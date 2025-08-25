@@ -35,15 +35,17 @@ defmodule ExatasHubWeb.CourseLive.Playlist do
       playlist_id={@playlist_id}
       slug={@playlist_slug}
     >
-      <iframe
-        class="w-full aspect-video"
-        src={"https://www.youtube.com/embed/#{@video_id}"}
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      >
-      </iframe>
+      <div class="card bg-base-100 shadow-xl border border-gray-200 dark:border-gray-700 rounded-xl overflow-hidden">
+        <iframe
+          class="w-full aspect-video"
+          src={"https://www.youtube.com/embed/#{@video_id}"}
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        >
+        </iframe>
+      </div>
     </Layouts.app_sidebar>
     """
   end

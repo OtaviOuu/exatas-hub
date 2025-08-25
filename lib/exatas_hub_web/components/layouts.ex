@@ -91,7 +91,7 @@ defmodule ExatasHubWeb.Layouts do
         aria-label="Sidenav"
       >
         <div class="overflow-y-auto py-5 px-3 h-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-          <h2 class="text-2xl font-bold mb-6 text-center text-primary">
+          <h2 class="top-0 bg-white dark:bg-gray-800 z-50 py-2 mb-4 border-b border-gray-200 dark:border-gray-700 ">
             <div class="flex justify-start items-center">
               <.link
                 navigate={~p"/courses/#{@slug}"}
