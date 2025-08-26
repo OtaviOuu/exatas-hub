@@ -31,31 +31,32 @@ defmodule ExatasHubWeb.CourseLive.Index do
   def course_card(assigns) do
     ~H"""
     <div
-      class="card card-lg bg-base-100 w-96 shadow-sm rounded-md transition-transform duration-200 ease-in-out hover:scale-105 hover:shadow-md"
+      class="card w-80 bg-base-100 shadow-md rounded-xl transition-transform duration-300 hover:scale-105 hover:shadow-xl"
       id={@id}
     >
-      <figure>
+      <figure class="relative w-full aspect-video overflow-hidden rounded-t-xl">
         <.link navigate={~p"/courses/#{@course.slug}"}>
           <img
             src={@course.image}
             alt={@course.title}
+            class="object-cover w-full h-full transition-transform duration-300 hover:scale-110"
           />
         </.link>
       </figure>
-      <div class="card-body">
-        <div class="flex items-center gap-2 mb-2">
-          <span class="inline-block text-primary">
-            <img
-              src={@course.university.logo}
-              alt="Universidade"
-              class="w-6 h-6 rounded-sm bg-base-200"
-            />
-          </span>
-          <h2 class="card-title mb-0">{@course.title}</h2>
+      <div class="card-body p-4 space-y-2">
+        <div class="flex items-center gap-3">
+          <img
+            src={@course.university.logo}
+            alt="Universidade"
+            class="w-7 h-7 rounded bg-base-200 border"
+          />
+          <h2 class="card-title text-base font-semibold leading-snug flex-1 truncate">
+            {@course.title}
+          </h2>
         </div>
-        <span>
+        <p class="text-sm text-gray-600 line-clamp-2">
           A card component has a figure, a body part, and inside body there are title and actions parts
-        </span>
+        </p>
       </div>
     </div>
     """

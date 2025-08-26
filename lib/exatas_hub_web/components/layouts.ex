@@ -35,47 +35,52 @@ defmodule ExatasHubWeb.Layouts do
 
   def app(assigns) do
     ~H"""
-    <header class="navbar px-4 sm:px-6 lg:px-8">
+    <header class="navbar bg-base-100 shadow-sm px-4 sm:px-6 lg:px-8 sticky top-0 z-50">
       <div class="flex-1">
-        <a href="/" class="flex-1 flex w-fit items-center gap-2">
+        <.link navigate="/" class="flex items-center gap-2 hover:opacity-80 transition">
           <img src={~p"/images/logo.svg"} width="36" />
-          <span class="text-sm font-semibold">ExatasHub</span>
-        </a>
+          <span class="text-base font-bold">ExatasHub</span>
+        </.link>
       </div>
-      <div class="flex-none">
-        <ul class="flex flex-column px-1 space-x-4 items-center">
-          <%= if @current_scope do %>
-            <li>
-              {@current_scope.user.email}
-            </li>
-            <li>
-              <.link navigate={~p"/users/settings"} class="btn btn-ghost">Settings</.link>
-            </li>
-            <li>
-              <.link href={~p"/users/log-out"} method="delete" class="btn btn-ghost">Log out</.link>
-            </li>
-          <% else %>
-            <li>
-              <.link navigate={~p"/users/register"} class="btn btn-ghost">Register</.link>
-            </li>
-            <li>
-              <.link navigate={~p"/users/log-in"} class="btn btn-ghost">Log in</.link>
-            </li>
-          <% end %>
-          <li>
-            <.link navigate={~p"/courses"} class="btn btn-ghost">Courses</.link>
-          </li>
-          <li>
-            <.link navigate={~p"/universities"} class="btn btn-ghost">Universities</.link>
-          </li>
-        </ul>
+
+      <nav class="hidden md:flex items-center space-x-4">
+        <%= if @current_scope do %>
+          <span class="text-sm text-gray-600">{@current_scope.user.email}</span>
+          <.link navigate={~p"/users/settings"} class="btn btn-ghost btn-sm">Settings</.link>
+          <.link href={~p"/users/log-out"} method="delete" class="btn btn-ghost btn-sm">Log out</.link>
+        <% else %>
+          <.link navigate={~p"/users/register"} class="btn btn-ghost btn-sm">Register</.link>
+          <.link navigate={~p"/users/log-in"} class="btn btn-ghost btn-sm">Log in</.link>
+        <% end %>
+        <.link navigate={~p"/courses"} class="btn btn-ghost btn-sm">Courses</.link>
+        <.link navigate={~p"/universities"} class="btn btn-ghost btn-sm">Universities</.link>
+      </nav>
+
+      <div class="md:hidden">
+        <details class="dropdown dropdown-end">
+          <summary class="btn btn-ghost btn-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </summary>
+          <ul class="menu menu-sm dropdown-content mt-2 p-2 shadow bg-base-100 rounded-box w-52 space-y-1">
+            <%= if @current_scope do %>
+              <li class="text-sm px-2 py-1 text-gray-600">{@current_scope.user.email}</li>
+              <li><.link navigate={~p"/users/settings"}>Settings</.link></li>
+              <li><.link href={~p"/users/log-out"} method="delete">Log out</.link></li>
+            <% else %>
+              <li><.link navigate={~p"/users/register"}>Register</.link></li>
+              <li><.link navigate={~p"/users/log-in"}>Log in</.link></li>
+            <% end %>
+            <li><.link navigate={~p"/courses"}>Courses</.link></li>
+            <li><.link navigate={~p"/universities"}>Universities</.link></li>
+          </ul>
+        </details>
       </div>
     </header>
 
-    <main class="container mx-auto px-4 py-8 ">
-      <div>
-        {render_slot(@inner_block)}
-      </div>
+    <main class="container mx-auto px-4 py-6 md:py-10">
+      {render_slot(@inner_block)}
     </main>
 
     <.flash_group flash={@flash} />
