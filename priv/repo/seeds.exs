@@ -17,3 +17,9 @@ Repo.insert!(%University{
   initialism: "UFMG",
   logo: "https://logodownload.org/wp-content/uploads/2015/02/ufmg-logo-0.png"
 })
+
+Repo.insert!(%University{
+  name: "Universidade de São Paulo",
+  initialism: "USP",
+  logo: "https://imagens.usp.br/wp-content/uploads/USP.jpg"
+})
