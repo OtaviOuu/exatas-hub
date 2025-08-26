@@ -234,7 +234,7 @@ defmodule ExatasHubWeb.UserAuth do
     socket = mount_current_scope(socket, session)
 
     if socket.assigns.current_scope && socket.assigns.current_scope.user &&
-         !socket.assigns.current_scope.user.admin? do
+         socket.assigns.current_scope.user.admin? do
       {:cont, socket}
     else
       socket =
