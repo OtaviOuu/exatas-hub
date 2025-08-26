@@ -9,7 +9,7 @@ defmodule ExatasHub.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"ExatasHub", "contact@example.com"})
+      |> from({"ExatasHub", "conta.otaviou@gmail.com"})
       |> subject(subject)
       |> text_body(body)
 

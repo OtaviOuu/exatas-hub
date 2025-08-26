@@ -1,5 +1,6 @@
 defmodule ExatasHub.Youtube.GetAllVideosFromPlaylist do
-  @api_key System.fetch_env!("YOUTUBE_API_KEY")
+  @api_key Application.get_env(:exatas_hub, :youtube_api_key)
+
   def call(playlist_link) do
     IO.inspect(playlist_link, label: "Playlist Link")
 
