@@ -171,9 +171,7 @@ defmodule ExatasHubWeb.CourseLive.Show do
               </div>
               <div class="flex-1">
                 <h3 class="font-semibold text-base-content">{video.title}</h3>
-                <p class="text-sm text-base-content/70">
-                  {String.slice(video.description, 0, 200) <> if String.length(video.description) > 200, do: "..."}
-                </p>
+
                 <div class="flex items-center mt-2 text-xs text-base-content/60">
                   <.icon name="hero-clock" class="w-4 h-4 mr-1" /> Pendente
                 </div>
