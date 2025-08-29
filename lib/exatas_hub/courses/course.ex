@@ -8,6 +8,7 @@ defmodule ExatasHub.Courses.Course do
     field :image, :string
     field :slug, :string
     field :playlist_link, :string
+    has_many :messages, ExatasHub.Messages.Message, on_delete: :delete_all
     belongs_to :university, ExatasHub.Universities.University
     timestamps()
   end

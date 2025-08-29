@@ -46,6 +46,7 @@ defmodule ExatasHubWeb.Layouts do
       <nav class="hidden md:flex items-center space-x-4">
         <%= if @current_scope do %>
           <span class="text-sm text-gray-600">{@current_scope.user.email}</span>
+          <.link :if={@current_scope.user.admin?} navigate={~p"/admin"} class="btn btn-ghost btn-sm">Admin</.link>
           <.link navigate={~p"/users/settings"} class="btn btn-ghost btn-sm">Settings</.link>
           <.link href={~p"/users/log-out"} method="delete" class="btn btn-ghost btn-sm">Log out</.link>
         <% else %>

@@ -24,6 +24,7 @@ defmodule ExatasHubWeb.Router do
 
     live_session :admin,
       on_mount: [{ExatasHubWeb.UserAuth, :require_admin}] do
+      live "/admin", AdminDashboardLive.Index, :index
       live "/courses/new", CourseLive.New, :new
       live "/universities/new", UniversityLive.New, :new
     end
