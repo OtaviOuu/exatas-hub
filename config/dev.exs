@@ -2,13 +2,10 @@ import Config
 
 # Configure your database
 config :exatas_hub, ExatasHub.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "exatas_hub_dev",
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  database: "dev.sqlite3",
+  pool_size: 5,
+  pool: Ecto.Adapters.SQL.Sandbox,
+  adapter: Ecto.Adapters.SQLite3
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

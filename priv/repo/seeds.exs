@@ -23,3 +23,21 @@ Repo.insert!(%University{
   initialism: "USP",
   logo: "https://imagens.usp.br/wp-content/uploads/USP.jpg"
 })
+
+Repo.insert!(%University{
+  name: "Universidade Federal de São Paulo",
+  initialism: "Unifesp",
+  logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWi5Gr21_UiB8JSIN3vAxnkcGmGk_k7-gOsg&s"
+})
+
+Repo.insert!(%University{
+  name: "Instituto de Matemática Pura e Aplicada",
+  initialism: "IMPA",
+  logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYYhs7eiLcht5mDtbt0Vp0J1FnrFgzfA48OA&s"
+})
+
+Repo.insert!(%University{
+  name: "Universidade de São Carlos",
+  initialism: "UFScar",
+  logo: "https://pbs.twimg.com/profile_images/1696229157603082243/jDBRIF1m_400x400.jpg"
+})
