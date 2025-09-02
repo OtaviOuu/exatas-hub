@@ -35,3 +35,7 @@ exatas_hub-*.tar
 npm-debug.log
 /assets/node_modules/
 
+
+*.sqlite3*
+*.db-*
+*.sqlite3

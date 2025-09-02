@@ -21,11 +21,11 @@ if System.get_env("PHX_SERVER") do
 end
 
 if config_env() == :prod do
-  database_url =
-    System.get_env("DATABASE_URL") ||
+  database_path =
+    System.get_env("DATABASE_PATH") ||
       raise """
-      environment variable DATABASE_URL is missing.
-      For example: ecto://USER:PASS@HOST/DATABASE
+      environment variable DATABASE_PATH is missing.
+      For example: /path/to/your/database.sqlite3
       """
 
   youtube_api_key =
@@ -38,7 +38,8 @@ if config_env() == :prod do
 
   config :exatas_hub, ExatasHub.Repo,
     # ssl: true,
-    url: database_url,
+    adapter: Ecto.Adapters.SQLite3,
+    database: database_path,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     # For machines with several cores, consider starting multiple pools of `pool_size`
     # pool_count: 4,
