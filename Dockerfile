@@ -98,4 +98,4 @@ USER nobody
 # above and adding an entrypoint. See https://github.com/krallin/tini for details
 # ENTRYPOINT ["/tini", "--"]
 
-CMD ["/app/bin/server"]
+CMD ["sh", "-c", "./bin/exatas_hub eval ExatasHub.Release.migrate && ./bin/exatas_hub start"]
